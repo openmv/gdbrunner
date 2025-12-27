@@ -1,10 +1,10 @@
 [build-system]
-requires = ["setuptools>=61.0"]
+requires = ["setuptools>=61.0", "setuptools-scm>=8.0"]
 build-backend = "setuptools.build_meta"
 
 [project]
 name = "gdbrunner"
-version = "0.0.1"
+dynamic = ["version"]
 description = "GDB debug server launcher for embedded targets"
 license = {text = "MIT"}
 requires-python = ">=3.8"
@@ -33,3 +33,6 @@ Repository = "https://github.com/openmv/gdbrunner"
 
 [tool.setuptools.packages.find]
 where = ["src"]
+
+[tool.setuptools_scm]
+version_scheme = "no-guess-dev"
