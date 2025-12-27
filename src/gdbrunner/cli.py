@@ -96,8 +96,8 @@ def run_debug_session(args, server_cmd):
     # Start GDB server in background
     server_proc = subprocess.Popen(
         server_cmd,
-        stdout=subprocess.DEVNULL,
-        stderr=subprocess.DEVNULL,
+        stdout=None if args.show_output else subprocess.DEVNULL,
+        stderr=None if args.show_output else subprocess.DEVNULL,
         start_new_session=True,
     )
 
@@ -154,6 +154,7 @@ def main():
         print("Common options:\n")
         print("  --toolchain PREFIX  Toolchain prefix (default: arm-none-eabi-)")
         print("  --dryrun            Print command without running")
+        print("  --show-output       Show server output")
         print("  elf                 ELF file to debug")
 
         for name in sorted(backends.keys()):
@@ -184,6 +185,10 @@ def main():
     parser.add_argument(
         "--dryrun", action="store_true",
         help="Print command without running"
+    )
+    parser.add_argument(
+        "--show-output", action="store_true",
+        help="Show server output"
     )
     add_arguments(parser, config["arguments"])
     parser.add_argument("elf", help="ELF file to debug")
