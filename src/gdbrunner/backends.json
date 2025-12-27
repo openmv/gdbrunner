@@ -13,9 +13,15 @@
   },
   "stlink": {
     "command": "ST-LINK_gdbserver",
+    "paths": [
+      "~/st/stm32cubeide_*/plugins/*cubeprogrammer.*/tools/bin",
+      "/opt/st/stm32cubeide_*/plugins/*cubeprogrammer.*/tools/bin",
+      "/opt/st/STM32CubeProgrammer/bin",
+      "~/STM32CubeProgrammer/bin"
+    ],
     "arguments": [
       {"flag": "--port", "cmd": "--port-number", "type": "int", "default": 2331, "help": "GDB server port (default: 2331)"},
-      {"flag": "--cube-prog", "cmd": "--stm32cubeprogrammer-path", "required": true, "help": "Path to STM32CubeProgrammer tools"},
+      {"flag": "--cube-prog", "cmd": "--stm32cubeprogrammer-path", "required": true, "auto": true, "help": "Path to STM32CubeProgrammer tools"},
       {"flag": "--extload", "cmd": "--extload", "help": "External loader file"},
       {"flag": "--apid", "cmd": "--apid", "type": "int", "default": 1, "help": "Access port ID (default: 1)"},
       {"flag": "--halt", "cmd": "--halt", "type": "bool", "default": true, "help": "Halt on connect (default: true)"},
