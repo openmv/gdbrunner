@@ -6,6 +6,7 @@
 """Command-line interface for gdbrunner."""
 
 import argparse
+import glob
 import json
 import os
 import signal
@@ -23,7 +24,17 @@ def load_backends():
         return json.load(f)
 
 
-def add_arguments(parser, arguments):
+def search_path(patterns):
+    """Search glob patterns and return first match."""
+    for pattern in patterns:
+        expanded = os.path.expanduser(pattern)
+        matches = sorted(glob.glob(expanded), reverse=True)
+        if matches:
+            return matches[0]
+    return None
+
+
+def add_arguments(parser, config):
     """Add arguments from JSON config to parser."""
     def parse_bool(value):
         if value.lower() in ("true", "1", "yes"):
@@ -32,7 +43,7 @@ def add_arguments(parser, arguments):
             return False
         raise argparse.ArgumentTypeError(f"Invalid boolean: {value}")
 
-    for arg in arguments:
+    for arg in config["arguments"]:
         flag = arg["flag"]
         kwargs = {}
 
@@ -40,7 +51,11 @@ def add_arguments(parser, arguments):
             kwargs["help"] = arg["help"]
         if "default" in arg:
             kwargs["default"] = arg["default"]
-        if arg.get("required"):
+        elif arg.get("auto"):
+            path = search_path(config.get("paths", []))
+            if path:
+                kwargs["default"] = path
+        if arg.get("required") and "default" not in kwargs:
             kwargs["required"] = True
 
         arg_type = arg.get("type")
@@ -190,7 +205,7 @@ def main():
         "--show-output", action="store_true",
         help="Show server output"
     )
-    add_arguments(parser, config["arguments"])
+    add_arguments(parser, config)
     parser.add_argument("elf", help="ELF file to debug")
 
     args = parser.parse_args(sys.argv[2:])
