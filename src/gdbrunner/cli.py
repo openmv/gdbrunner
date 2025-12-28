@@ -51,8 +51,8 @@ def add_arguments(parser, config):
             kwargs["help"] = arg["help"]
         if "default" in arg:
             kwargs["default"] = arg["default"]
-        elif arg.get("auto"):
-            path = search_path(config.get("paths", []))
+        elif "paths" in arg:
+            path = search_path(arg["paths"])
             if path:
                 kwargs["default"] = path
         if arg.get("required") and "default" not in kwargs:
