@@ -1,14 +1,21 @@
-# gdbrunner
+# 🐛 gdbrunner
 
-GDB runner - start debug servers and attach GDB.
+A simple CLI tool that starts a GDB server and automatically attaches GDB to debug embedded targets.
 
-## Installation
+## ✨ Features
+
+- 🔌 **Multiple backends** - Supports J-Link and ST-Link debug probes
+- 🔍 **Auto-discovery** - Automatically finds STM32CubeProgrammer installation
+- 🧹 **Clean lifecycle** - Starts the server, attaches GDB, and cleans up when done
+- ⚙️ **Configurable** - JSON-based backend configuration for easy customization
+
+## 📦 Installation
 
 ```bash
 pip install gdbrunner
 ```
 
-## Usage
+## 🚀 Usage
 
 ```bash
 gdbrunner <backend> [options] elf
@@ -22,18 +29,21 @@ gdbrunner <backend> [options] elf
 ### Examples
 
 ```bash
-# Start J-Link and attach GDB
+# 🔧 Start J-Link and attach GDB
 gdbrunner jlink --device STM32H743VI firmware.elf
 
-# Start ST-Link and attach GDB
-gdbrunner stlink --cube-prog /path/to/cubeprog firmware.elf
+# 🔧 Start ST-Link and attach GDB (auto-discovers CubeProgrammer path)
+gdbrunner stlink firmware.elf
 
-# Dry run - print server command without running
+# 👀 Dry run - print server command without running
 gdbrunner jlink --device STM32H743VI --dryrun firmware.elf
+
+# 📺 Show server output for debugging connection issues
+gdbrunner stlink --show-output firmware.elf
 ```
 
 Run `gdbrunner --help` for all options.
 
-## License
+## 📄 License
 
 MIT
