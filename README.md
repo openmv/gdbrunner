@@ -4,7 +4,7 @@ A simple CLI tool that starts a GDB server and automatically attaches GDB to deb
 
 ## ✨ Features
 
-- 🔌 **Multiple backends** - Supports J-Link and ST-Link debug probes
+- 🔌 **Multiple backends** - Supports J-Link, ST-Link, and QEMU
 - 🔍 **Auto-discovery** - Automatically finds STM32CubeProgrammer installation
 - 🧹 **Clean lifecycle** - Starts the server, attaches GDB, and cleans up when done
 - ⚙️ **Configurable** - JSON-based backend configuration for easy customization
@@ -25,6 +25,7 @@ gdbrunner <backend> [options] elf
 
 - `jlink` - J-Link GDB server
 - `stlink` - ST-Link GDB server
+- `qemu` - QEMU ARM emulator
 
 ### Examples
 
@@ -40,6 +41,9 @@ gdbrunner jlink --device STM32H743VI --dryrun firmware.elf
 
 # 📺 Show server output for debugging connection issues
 gdbrunner stlink --show-output firmware.elf
+
+# 🖥️ Start QEMU and attach GDB
+gdbrunner qemu --machine mps2-an500 firmware.elf
 ```
 
 Run `gdbrunner --help` for all options.
