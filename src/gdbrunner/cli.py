@@ -89,7 +89,12 @@ def build_command(config, args):
             if value:
                 cmd.append(arg["cmd"])
         else:
-            cmd.extend([arg["cmd"], str(value)])
+            prefix = arg.get("prefix", "")
+            cmd.extend([arg["cmd"], f"{prefix}{value}"])
+
+    # Add ELF file if backend requires it (e.g., QEMU uses -kernel)
+    if "elf_arg" in config:
+        cmd.extend([config["elf_arg"], args.elf])
 
     return cmd
 
