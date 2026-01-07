@@ -1,4 +1,13 @@
 {
+  "qemu": {
+    "command": "qemu-system-arm",
+    "fixed_args": ["-nographic", "-monitor", "null", "-semihosting", "-S", "-serial", "pty"],
+    "elf_arg": "-kernel",
+    "arguments": [
+      {"flag": "--machine", "cmd": "-machine", "required": true, "help": "QEMU machine type (e.g., mps2-an500, mps3-an547)"},
+      {"flag": "--port", "cmd": "-gdb", "prefix": "tcp::", "type": "int", "default": 1234, "help": "GDB server port (default: 1234)"}
+    ]
+  },
   "jlink": {
     "command": "JLinkGDBServer",
     "fixed_args": ["-nogui", "1"],
